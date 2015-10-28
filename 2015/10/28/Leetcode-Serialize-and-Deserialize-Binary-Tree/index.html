@@ -3,13 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Luo Shang&#39;s Blog</title>
+  <title>Leetcode-Serialize and Deserialize Binary Tree | Luo Shang&#39;s Blog</title>
   <meta name="author" content="Luo Shang">
+  
+  <meta name="description" content="没有仔细研究Leetcode自己的serialize方式，这里是直接用括号来划分层次:例如：
+    1
+   / \
+  2   3
+ /
+21
+会被序列化为(1(2(21)())(3))加上缩进后层次化更明显：
+(1    // root node
+    (2
+          (21)
+ ">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Leetcode-Serialize and Deserialize Binary Tree"/>
   <meta property="og:site_name" content="Luo Shang&#39;s Blog"/>
 
   
@@ -44,8 +56,7 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
@@ -55,7 +66,7 @@
       
       
   
-    <h1 class="title"><a href="/2015/10/28/Leetcode-Serialize-and-Deserialize-Binary-Tree/">Leetcode-Serialize and Deserialize Binary Tree</a></h1>
+    <h1 class="title">Leetcode-Serialize and Deserialize Binary Tree</h1>
   
 
     </header>
@@ -84,6 +95,24 @@
       
         
         
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
       
       <div class="clearfix"></div>
     </footer>
@@ -91,14 +120,27 @@
 </article>
 
 
+<section id="comment">
+  <h1 class="title">留言</h1>
 
-
-
-<nav id="pagination">
   
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2015/10/28/Leetcode-Serialize-and-Deserialize-Binary-Tree/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
   
-  <div class="clearfix"></div>
-</nav></div></div>
+</section>
+
+</div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
