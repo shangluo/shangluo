@@ -12,11 +12,10 @@
   2   3
  /
 21
-会被序列化为(1(2(21)())(3))加上缩进后层次化更明显：
+上面这颗二叉树会被序列化为(1(2(21)())(3))加上缩进后层次化更明显：
 (1    // root node
     (2
-          (21)
- ">
+         ">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -78,7 +77,7 @@
   <span class="number">2</span>   <span class="number">3</span>
  /
 <span class="number">21</span>
-</code></pre><p>会被序列化为<strong>(1(2(21)())(3))</strong><br>加上缩进后层次化更明显：</p>
+</code></pre><p>上面这颗二叉树会被序列化为<code>(1(2(21)())(3))</code><br>加上缩进后层次化更明显：</p>
 <pre><code><span class="list">(<span class="keyword">1</span>    // root node
     <span class="list">(<span class="keyword">2</span>
           <span class="list">(<span class="keyword">21</span>)</span>
@@ -86,7 +85,7 @@
     )</span>
     <span class="list">(<span class="keyword">3</span>)</span>
  )</span>
-</code></pre><p>序列化很简单，中序遍历，递归输出对应节点即可。<br>解析的时候，遇到 ‘(‘ 递归调用deserialize，最终生成完整二叉树。<br>下面是实现，代码很简单，就不一一解释了：</p>
+</code></pre><p>序列化很简单，前序遍历二叉树，递归输出对应节点即可。<br>解析的时候，遇到 <code>(</code> 时调用deserialize，然后再递归调用deserialize分别设置左右节点，最终生成完整二叉树。<br>下面是实现方法，代码很简单，就不一一解释了：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">class</span> Codec &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">// Encodes a tree to a single string.</span></span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">serialize</span><span class="params">(TreeNode <span class="keyword">const</span>* root)</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> encode = [](TreeNode <span class="keyword">const</span> *node) -&gt; <span class="built_in">string</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> node ? to_string(node-&gt;val) : <span class="string">""</span>;</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">string</span> str = <span class="string">"("</span>;</span><br><span class="line">		str += encode(root);</span><br><span class="line">		<span class="keyword">if</span> (root &amp;&amp; (root-&gt;left || root-&gt;right))</span><br><span class="line">		&#123;</span><br><span class="line">			str += serialize(root-&gt;left);</span><br><span class="line">			str += serialize(root-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> str + <span class="string">")"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">TreeNode* <span class="title">deserialize</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> * &amp;ptr)</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		TreeNode *root = <span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">if</span> (ptr &amp;&amp; *ptr == <span class="string">'('</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			++ptr;</span><br><span class="line">			<span class="built_in">string</span> str = <span class="string">""</span>;</span><br><span class="line">			<span class="keyword">while</span> (*ptr &amp;&amp; (*ptr != <span class="string">'('</span> &amp;&amp; *ptr != <span class="string">')'</span>))</span><br><span class="line">			&#123;</span><br><span class="line">				str += *ptr++;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (!str.empty())</span><br><span class="line">			&#123;</span><br><span class="line">				root = <span class="keyword">new</span> TreeNode(stoi(str));		</span><br><span class="line">				root-&gt;left = deserialize(ptr);	</span><br><span class="line">				root-&gt;right = deserialize(ptr);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (*ptr == <span class="string">')'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				++ptr;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> root;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Decodes your encoded data to tree.</span></span><br><span class="line">	<span class="function">TreeNode* <span class="title">deserialize</span><span class="params">(<span class="built_in">string</span> data)</span> </span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> ptr = data.c_str();</span><br><span class="line">		<span class="keyword">return</span> deserialize(ptr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// Your Codec object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment">// Codec codec;</span></span><br><span class="line"><span class="comment">// codec.deserialize(codec.serialize(root));</span></span><br></pre></td></tr></table></figure>
 
       
@@ -117,8 +116,8 @@
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="搜尋">
-    <input type="hidden" name="q" value="site:luoshang.github.io">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:shangluo.github.io">
   </form>
 </div>
 
